@@ -37,17 +37,17 @@ public class WarehouseServlet extends HttpServlet {
 
     }
 
-    private void infoPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void infoPage(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String id = req.getHttpServletMapping().getMatchValue();
         WarehouseDto warehouse = service.get(id);
         req.setAttribute("warehouse", warehouse);
-        resp.sendRedirect("/warehouse/info.jsp");
+        req.getRequestDispatcher("/warehouse/info.jsp").forward(req,resp);
     }
 
-    private void listPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void listPage(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         List<WarehouseDto> warehouses = service.getAll();
         req.setAttribute("warehouses", warehouses);
-        resp.sendRedirect("/warehouse/list.jsp");
+        req.getRequestDispatcher("/warehouse/list.jsp").forward(req,resp);
     }
 
     private void updatePage(HttpServletRequest req, HttpServletResponse resp) {

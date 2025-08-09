@@ -1,5 +1,7 @@
 package uz.pdp.omnborxona.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import uz.pdp.omnborxona.mapper.WarehouseMapper;
 import uz.pdp.omnborxona.model.dto.WarehouseCreateDto;
 import uz.pdp.omnborxona.model.dto.WarehouseDto;
@@ -12,10 +14,12 @@ import uz.pdp.omnborxona.validator.WarehouseValidator;
 
 import java.util.List;
 
+@ApplicationScoped
 public class WarehouseService
         extends AbstractService<WarehouseMapper, WarehouseRepository, WarehouseValidator>
         implements CrudService<WarehouseDto, WarehouseCreateDto, WarehouseUpdateDto, String> {
 
+    @Inject
     public WarehouseService(WarehouseMapper mapper, WarehouseRepository repository, WarehouseValidator validator) {
         super(mapper, repository, validator);
     }
@@ -29,7 +33,7 @@ public class WarehouseService
     @Override
     public WarehouseDto update(WarehouseUpdateDto dto, String id) {
         Warehouse warehouse = validator.existsAndGet(id);
-        mapper.fromDto(dto,warehouse);
+        mapper.fromDto(dto, warehouse);
         Warehouse save = repository.save(warehouse);
         return mapper.toDto(save);
     }
